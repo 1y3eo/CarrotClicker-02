@@ -7,6 +7,7 @@ public class InputManager : MonoBehaviour
 {
     [Header(" Actions ")]
     public static Action onCarrotClicked;
+    public static Action<Vector2> onCarrotClickedPosition;
 
     void Start()
     {
@@ -28,5 +29,6 @@ public class InputManager : MonoBehaviour
 
         Debug.Log("We hit a carrot !");
         onCarrotClicked?.Invoke();
+        onCarrotClickedPosition?.Invoke(hit.point);
     }
 }
