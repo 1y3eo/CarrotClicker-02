@@ -154,7 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   carrotsText: {fileID: 1669396550}
   totalCarrotCount: 0
-  FrenzyModeMultiplier: 0
+  FrenzyModeMultiplier: 15
 --- !u!4 &42146517
 Transform:
   m_ObjectHideFlags: 0
