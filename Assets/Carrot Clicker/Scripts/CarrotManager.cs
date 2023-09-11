@@ -11,18 +11,28 @@ public class CarrotManager : MonoBehaviour
 
     [Header(" Data ")]
     [SerializeField] private double totalCarrotCount;
-    [SerializeField] private int carrotIncrement;
+    [SerializeField] private int FrenzyModeMultiplier;
+    private int carrotIncrement;
 
     private void Awake()
     {
         LoadData();
+
+        carrotIncrement = 1;
+
         InputManager.onCarrotClicked += CarrotClickedCallback;
+
+        Carrot.onFrenzyModeStarted += FrenzyModeStartedCallback;
+        Carrot.onFrenzyModeStopped += FrenzyModeStoppedCallback;
+
     }
 
     private void OnDestroy()
     {
         InputManager.onCarrotClicked -= CarrotClickedCallback;
 
+        Carrot.onFrenzyModeStarted -= FrenzyModeStartedCallback;
+        Carrot.onFrenzyModeStopped -= FrenzyModeStoppedCallback;
     }
     void Start()
     {
@@ -48,6 +58,16 @@ public class CarrotManager : MonoBehaviour
         carrotsText.text = totalCarrotCount + " Carrots!";
     }
 
+    private void FrenzyModeStartedCallback()
+    {
+        carrotIncrement = FrenzyModeMultiplier;
+    }
+
+    private void FrenzyModeStoppedCallback()
+    {
+        carrotIncrement = 1;
+    }
+
     private void SaveData()
     {
         PlayerPrefs.SetString("Carrots", totalCarrotCount.ToString());
@@ -58,5 +78,10 @@ public class CarrotManager : MonoBehaviour
         double.TryParse(PlayerPrefs.GetString("Carrots"), out totalCarrotCount);
 
         UpdateCarrotsText();
+    }
+
+    public int GetCurrentMultiplier()
+    {
+        return carrotIncrement;
     }
 }

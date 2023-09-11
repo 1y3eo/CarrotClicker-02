@@ -16,13 +16,24 @@ public class InputManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-            ThrowRaycast();
+        if (Input.touchCount > 0)
+            ManagerTouches();
     }
 
-    private void ThrowRaycast()
+    private void ManagerTouches()
     {
-        RaycastHit2D hit = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(Input.mousePosition));
+        for (int i = 0; i < Input.touchCount; i++)
+        {
+            Touch touch = Input.GetTouch(i);
+
+            if (touch.phase == TouchPhase.Began)
+                ThrowRaycast(touch.position);
+        }
+    }
+
+    private void ThrowRaycast(Vector2 touchPosition)
+    {
+        RaycastHit2D hit = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(touchPosition));
 
         if (hit.collider == null)
             return;
