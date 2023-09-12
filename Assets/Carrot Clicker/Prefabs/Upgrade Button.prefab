@@ -1264,3 +1264,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9fcee254070884438ef6e9bd587105b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  iconImage: {fileID: 2157106640310430193}
+  titleText: {fileID: 4269350720837204301}
+  subtitleText: {fileID: 2794669478236752601}
+  priceText: {fileID: 4216191869779999994}
+  button: {fileID: 427475640148115295}

@@ -19,11 +19,18 @@ public class AutoClickManager : MonoBehaviour
 
     private void Awake()
     {
-        LoadData();
+        ShopManager.onUpgradePurchased += CheckIfCanUpgrade;
+    }
+
+    private void OnDestroy()
+    {
+        ShopManager.onUpgradePurchased -= CheckIfCanUpgrade;
     }
 
     void Start()
     {
+        LoadData();
+
         carrotsPerSecond = level * .1f;
 
         InvokeRepeating("AddCarrots", 1, 1);
@@ -36,6 +43,12 @@ public class AutoClickManager : MonoBehaviour
     void Update()
     {
         rotator.Rotate(Vector3.forward * Time.deltaTime * rotatorSpeed);
+    }
+
+    private void CheckIfCanUpgrade(int upgradeIndex)
+    {
+        if (upgradeIndex == 0)
+            Upgrade();
     }
 
     private void SpawnBunnies()
@@ -70,7 +83,6 @@ public class AutoClickManager : MonoBehaviour
     {
         level++;
         carrotsPerSecond = level * .1f;
-        SaveData();
 
         if (level <= 36)
         {
@@ -117,11 +129,7 @@ public class AutoClickManager : MonoBehaviour
 
     private void LoadData()
     {
-        level = PlayerPrefs.GetInt("AutoClickLevel");
+        level = ShopManager.instance.GetUpgradeLevel(0);
     }
 
-    private void SaveData()
-    {
-        PlayerPrefs.SetInt("AutoClickLevel", level);
-    }
 }

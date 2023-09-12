@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+
 
 public class ShopManager : MonoBehaviour
 {
+    public static ShopManager instance;
+
     [Header(" Elements ")]
     [SerializeField] private UpgradeButton upgradeButton;
     [SerializeField] private Transform upgradeButtonsParent;
@@ -11,6 +15,16 @@ public class ShopManager : MonoBehaviour
     [Header(" Data ")]
     [SerializeField] private UpgradeSO[] upgrades;
 
+    [Header(" Action ")]
+    public static Action<int> onUpgradePurchased;
+
+    public void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(gameObject);
+    }
     void Start()
     {
         SpawnButtons();
@@ -26,7 +40,6 @@ public class ShopManager : MonoBehaviour
         for (int i = 0; i < upgrades.Length; i++)
         {
             SpawnButton(i);
-           
         }
     }
 
@@ -39,9 +52,50 @@ public class ShopManager : MonoBehaviour
 
         Sprite icon = upgrade.icon;
         string title = upgrade.title;
-        string subtitle = string.Format("lvl{0} (+{1} Cps)", upgradeLevel, upgrade.cpsPerLevel);
+        string subtitle = string.Format("lvl {0} (+{1} Cps)", upgradeLevel, upgrade.cpsPerLevel);
         string price = upgrade.GetPrice(upgradeLevel).ToString("F0");
 
         upgradeButtonInstance.Configure(icon, title, subtitle, price);
+
+        upgradeButtonInstance.GetButton().onClick.AddListener(() => UpgradeButtonClickedCallback(index));
+    }
+
+    private void UpgradeButtonClickedCallback(int upgradeIndex)
+    {
+        IncreaseUpgradeLevel(upgradeIndex);
+    }
+
+    private void IncreaseUpgradeLevel(int upgradeIndex)
+    {
+        int currentUpgradeLevel = GetUpgradeLevel(upgradeIndex);
+        currentUpgradeLevel++;
+
+        SaveUpgradeLevel(upgradeIndex, currentUpgradeLevel);
+
+        UpdateVisuals(upgradeIndex);
+
+        onUpgradePurchased?.Invoke(upgradeIndex);
+    }
+
+    private void UpdateVisuals(int upgradeIndex)
+    {
+        UpgradeButton upgradeButton = upgradeButtonsParent.GetChild(upgradeIndex).GetComponent<UpgradeButton>();
+
+        UpgradeSO upgrade = upgrades[upgradeIndex];
+        int upgradeLevel = PlayerPrefs.GetInt("Upgrade" + upgradeIndex);
+
+        string subtitle = string.Format("lvl {0} (+{1} Cps)", upgradeLevel, upgrade.cpsPerLevel);
+        string price = upgrade.GetPrice(upgradeLevel).ToString("F0");
+
+        upgradeButton.UpdateVisuals(subtitle, price);
+    }
+    public int GetUpgradeLevel(int upgradeIndex)
+    {
+        return PlayerPrefs.GetInt("Upgrade" + upgradeIndex);
+    }
+
+    private void SaveUpgradeLevel(int upgradeIndex, int upgradeLevel)
+    {
+        PlayerPrefs.SetInt("Upgrade" + upgradeIndex, upgradeLevel);
     }
 }
