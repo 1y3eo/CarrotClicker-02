@@ -5,6 +5,7 @@ using TMPro;
 
 public class CarrotManager : MonoBehaviour
 {
+    public static CarrotManager instance;
 
     [Header(" Elements ")]
     [SerializeField] private TextMeshProUGUI carrotsText;
@@ -16,6 +17,11 @@ public class CarrotManager : MonoBehaviour
 
     private void Awake()
     {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(gameObject);
+
         LoadData();
 
         carrotIncrement = 1;
@@ -44,9 +50,18 @@ public class CarrotManager : MonoBehaviour
         
     }
 
+    public void AddCarrots(float value)
+    {
+        totalCarrotCount += value;
+
+        UpdateCarrotsText();
+
+        SaveData();
+
+    }
+
     private void CarrotClickedCallback()
     {
-        totalCarrotCount += carrotIncrement;
 
         UpdateCarrotsText();
 
@@ -55,7 +70,7 @@ public class CarrotManager : MonoBehaviour
 
     private void UpdateCarrotsText()
     {
-        carrotsText.text = totalCarrotCount + " Carrots!";
+        carrotsText.text = totalCarrotCount.ToString("F0") + " Carrots!";
     }
 
     private void FrenzyModeStartedCallback()

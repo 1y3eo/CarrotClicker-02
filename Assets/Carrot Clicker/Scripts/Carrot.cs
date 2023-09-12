@@ -12,7 +12,7 @@ public class Carrot : MonoBehaviour
 
     [Header(" Settings ")]
     [SerializeField] private float fillRate;
-    [SerializeField] private bool isFrenzyModeActive = false;
+    private bool isFrenzyModeActive;
 
     [Header(" Action ")]
     public static Action onFrenzyModeStarted;
@@ -29,7 +29,7 @@ public class Carrot : MonoBehaviour
     }
     void Start()
     {
-        
+        isFrenzyModeActive = false;
     }
 
     void Update()
