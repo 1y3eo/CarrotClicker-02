@@ -62,7 +62,10 @@ public class ShopManager : MonoBehaviour
 
     private void UpgradeButtonClickedCallback(int upgradeIndex)
     {
-        IncreaseUpgradeLevel(upgradeIndex);
+        if (CarrotManager.instance.TryPurchase(GetUpgradePrice(upgradeIndex)))
+            IncreaseUpgradeLevel(upgradeIndex);
+        else
+            Debug.Log("You're too poor for the upgrade!");
     }
 
     private void IncreaseUpgradeLevel(int upgradeIndex)
@@ -89,6 +92,13 @@ public class ShopManager : MonoBehaviour
 
         upgradeButton.UpdateVisuals(subtitle, price);
     }
+
+
+    private double GetUpgradePrice(int upgradeIndex)
+    {
+        return upgrades[upgradeIndex].GetPrice(GetUpgradeLevel(upgradeIndex));
+    }
+
     public int GetUpgradeLevel(int upgradeIndex)
     {
         return PlayerPrefs.GetInt("Upgrade" + upgradeIndex);
@@ -97,5 +107,10 @@ public class ShopManager : MonoBehaviour
     private void SaveUpgradeLevel(int upgradeIndex, int upgradeLevel)
     {
         PlayerPrefs.SetInt("Upgrade" + upgradeIndex, upgradeLevel);
+    }
+
+    public UpgradeSO[] GetUpgrades()
+    {
+        return upgrades;
     }
 }

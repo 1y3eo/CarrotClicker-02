@@ -42,12 +42,31 @@ public class CarrotManager : MonoBehaviour
     }
     void Start()
     {
-        
+        AddCarrots(5000);
     }
 
     void Update()
     {
         
+    }
+
+    public bool TryPurchase(double price)
+    {
+        if (price <= totalCarrotCount)
+        {
+            totalCarrotCount -= price;
+            return true;
+        }
+        return false;
+    }
+
+    public void AddCarrots(double value)
+    {
+        totalCarrotCount += value;
+
+        UpdateCarrotsText();
+
+        SaveData();
     }
 
     public void AddCarrots(float value)
@@ -57,7 +76,6 @@ public class CarrotManager : MonoBehaviour
         UpdateCarrotsText();
 
         SaveData();
-
     }
 
     private void CarrotClickedCallback()

@@ -1844,9 +1844,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6337d8fa6ecdda942a379c6339d2c3fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upgradeButton: {fileID: 8835976292830988279, guid: 4e3328f2cd0979149a49f3a20957f1a1, type: 3}
+  upgradeButton: {fileID: 6179214404225282941, guid: 4e3328f2cd0979149a49f3a20957f1a1, type: 3}
   upgradeButtonsParent: {fileID: 1850027320}
   upgrades:
+  - {fileID: 11400000, guid: 76388fcdf8fbd334b8d95feb938535fb, type: 2}
   - {fileID: 11400000, guid: 76388fcdf8fbd334b8d95feb938535fb, type: 2}
 --- !u!1 &1549074500
 GameObject:
@@ -2347,6 +2348,50 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 2
+--- !u!1 &1860322613
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1860322614}
+  - component: {fileID: 1860322615}
+  m_Layer: 0
+  m_Name: Upgrade Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1860322614
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1860322613}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2144580580}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1860322615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1860322613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73ee05d305f188b41aa023237ecf5895, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1899820903
 GameObject:
   m_ObjectHideFlags: 0
@@ -2643,6 +2688,7 @@ Transform:
   - {fileID: 274601491}
   - {fileID: 2039849890}
   - {fileID: 1493189672}
+  - {fileID: 1860322614}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
